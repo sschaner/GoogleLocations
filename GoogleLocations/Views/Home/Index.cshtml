@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PointOfInterest>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>All Points of Interest</h2>
+@foreach (PointOfInterest pointOfInterest in Model)
+{
+    <div>@pointOfInterest.Name is at @pointOfInterest.Address</div>
+}
+
+<hr />
+<h2>Add a Point of Interest</h2>
+<form method="post" action="/home/SavePointOfInterest">
+    @Html.DisplayNameFor(model => model.Name):
+    <input type="text" name="Name" /><br />
+    @Html.DisplayNameFor(model => model.Address):
+    <input type="text" name="Address" /><br />
+    @Html.DisplayNameFor(model => model.City):
+    <input type="text" name="City" /><br />
+    @Html.DisplayNameFor(model => model.State):
+    <input type="text" name="State" /><br />
+    @Html.DisplayNameFor(model => model.ZIP):
+    <input type="text" name="ZIP" /><br />
+    <input type="submit" />
+</form>
