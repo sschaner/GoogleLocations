@@ -29,8 +29,8 @@ namespace GoogleLocations.Models
         [Required]
         public string State { get; set; }
 
-        [MinLength(6)]
-        [MaxLength(6)]
+        //[MinLength(6)]
+        //[MaxLength(6)]
         [Required]
         public int ZIP { get; set; }
     }

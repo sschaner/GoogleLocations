@@ -98,7 +98,13 @@ namespace GoogleLocations.Controllers
         // GET: PointsOfInterestsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            PointOfInterest result = null;
+            using (GoogleLocationContext context = new GoogleLocationContext())
+            {
+                result = context.PointsOfInterest.Where(x => x.LocationId == id).First();
+            }
+
+            return View(result);
         }
 
         // POST: PointsOfInterestsController/Delete/5
@@ -108,11 +114,24 @@ namespace GoogleLocations.Controllers
         {
             try
             {
+                using (GoogleLocationContext context = new GoogleLocationContext())
+                {
+                    PointOfInterest pointOfInterest = context.PointsOfInterest.Where(x => x.LocationId == id).First();
+                    pointOfInterest.Name = collection["Name"];
+                    pointOfInterest.Address = collection["Address"];
+                    pointOfInterest.City = collection["City"];
+                    pointOfInterest.State = collection["State"];
+                    pointOfInterest.ZIP = int.Parse(collection["ZIP"]);
+
+                    context.PointsOfInterest.Remove(pointOfInterest);
+                    context.SaveChanges();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
     }
